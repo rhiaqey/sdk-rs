@@ -1,6 +1,6 @@
-use std::sync::mpsc::Receiver;
 use async_trait::async_trait;
 use serde::{Serialize, Deserialize};
+use tokio::sync::mpsc::UnboundedReceiver;
 use crate::message::MessageValue;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -29,7 +29,7 @@ pub struct ProducerMessage {
     pub size: Option<usize>,
 }
 
-pub type ProducerMessageReceiver = Result<Receiver<ProducerMessage>, Box<dyn std::error::Error>>;
+pub type ProducerMessageReceiver = Result<UnboundedReceiver<ProducerMessage>, Box<dyn std::error::Error>>;
 
 pub trait Producer<S> {
     fn setup(&mut self, settings: Option<S>) -> ProducerMessageReceiver;
