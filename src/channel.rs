@@ -8,7 +8,7 @@ pub struct Channel {
     pub size: usize,
 }
 
-#[derive(Default, Clone, Debug)]
+#[derive(Deserialize, Default, Clone, Debug)]
 pub struct ChannelList {
     pub channels: Vec<Channel>,
 }
