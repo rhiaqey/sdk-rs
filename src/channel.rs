@@ -1,8 +1,7 @@
-use serde::de::{Error, Unexpected, Visitor};
-use serde::{Deserialize, Deserializer};
-use std::fmt::Formatter;
+// use serde::de::{Error, Unexpected, Visitor};
+use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct Channel {
     pub name: String,
@@ -13,7 +12,7 @@ pub struct Channel {
 pub struct ChannelList {
     pub channels: Vec<Channel>,
 }
-
+/*
 pub struct ChannelListDeserializer;
 
 impl ChannelList {
@@ -53,3 +52,4 @@ impl<'de> Deserialize<'de> for ChannelList {
         deserializer.deserialize_str(ChannelListDeserializer)
     }
 }
+*/
