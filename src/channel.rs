@@ -9,6 +9,7 @@ pub struct Channel {
 }
 
 #[derive(Serialize, Deserialize, Default, Clone, Debug)]
+#[serde(rename_all = "PascalCase")]
 pub struct ChannelList {
     pub channels: Vec<Channel>,
 }
