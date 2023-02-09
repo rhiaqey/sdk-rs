@@ -10,9 +10,17 @@ pub struct Channel {
 
 #[derive(Serialize, Deserialize, Default, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
-pub struct ChannelList {
+pub struct CreateChannelsRequest {
     pub channels: Vec<Channel>,
 }
+
+#[derive(Serialize, Deserialize, Default, Clone, Debug)]
+#[serde(rename_all = "PascalCase")]
+pub struct AssignChannelsRequest {
+    pub name: String,
+    pub channels: Vec<String>
+}
+
 /*
 pub struct ChannelListDeserializer;
 
