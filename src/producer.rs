@@ -34,8 +34,8 @@ pub type ProducerMessageReceiver = Result<UnboundedReceiver<ProducerMessage>, Bo
 #[async_trait]
 pub trait Producer<S> {
     fn setup(&mut self, settings: Option<S>) -> ProducerMessageReceiver;
-    fn get_settings(&mut self) -> S;
-    fn set_settings(&mut self, settings: S);
+    async fn get_settings(&self) -> S;
+    async fn set_settings(&mut self, settings: S);
     async fn start(&self);
     fn kind() -> String;
 }
