@@ -31,15 +31,11 @@ pub struct ProducerMessage {
 
 pub type ProducerMessageReceiver = Result<UnboundedReceiver<ProducerMessage>, Box<dyn std::error::Error>>;
 
+#[async_trait]
 pub trait Producer<S> {
     fn setup(&mut self, settings: Option<S>) -> ProducerMessageReceiver;
-    fn start(&self);
-    fn kind() -> String;
-}
-
-#[async_trait]
-pub trait AsyncProducer<S> {
-    fn setup(&mut self, settings: Option<S>) -> ProducerMessageReceiver;
+    fn get_settings(&mut self) -> S;
+    fn set_settings(&mut self, settings: S);
     async fn start(&self);
     fn kind() -> String;
 }
