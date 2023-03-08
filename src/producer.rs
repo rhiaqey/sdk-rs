@@ -33,9 +33,9 @@ pub type ProducerMessageReceiver =
     Result<UnboundedReceiver<ProducerMessage>, Box<dyn std::error::Error>>;
 
 #[async_trait]
-pub trait Producer<S> {
-    fn setup(&mut self, settings: Option<S>) -> ProducerMessageReceiver;
-    async fn set_settings(&mut self, settings: S);
+pub trait Producer {
+    fn setup(&mut self, settings: Option<String>) -> ProducerMessageReceiver;
+    async fn set_settings(&mut self, settings: String);
     async fn start(&mut self);
     fn kind() -> String;
 }
