@@ -37,5 +37,5 @@ pub trait Producer {
     fn setup(&mut self, settings: Option<String>) -> ProducerMessageReceiver;
     async fn set_settings(&mut self, settings: String);
     async fn start(&mut self);
-    fn kind() -> String;
+    fn kind(&self) -> String;
 }
