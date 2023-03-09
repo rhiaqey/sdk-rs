@@ -1,7 +1,7 @@
 use crate::message::MessageValue;
 use async_trait::async_trait;
 use serde::{Deserialize, Serialize};
-use tokio::sync::mpsc::{UnboundedReceiver, UnboundedSender};
+use tokio::sync::mpsc::UnboundedReceiver;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ProducerMessage {
@@ -30,11 +30,11 @@ pub struct ProducerMessage {
 }
 
 pub type ProducerMessageReceiver =
-    Result<UnboundedSender<ProducerMessage>, Box<dyn std::error::Error>>;
+    Result<UnboundedReceiver<ProducerMessage>, Box<dyn std::error::Error>>;
 
 #[async_trait]
 pub trait Producer {
-    fn setup(&mut self, sender: UnboundedSender<ProducerMessage>, settings: Option<String>) -> ProducerMessageReceiver;
+    fn setup(&mut self, settings: Option<String>) -> ProducerMessageReceiver;
     async fn set_settings(&mut self, settings: String);
     async fn start(&mut self);
     async fn stop(&mut self);
