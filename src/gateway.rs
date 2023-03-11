@@ -44,9 +44,15 @@ pub struct GatewayMessage {
 pub type GatewayMessageReceiver =
     Result<UnboundedReceiver<GatewayMessage>, Box<dyn std::error::Error>>;
 
+#[derive(Debug, Clone)]
+pub struct GatewayConfig {
+    pub port: u16,
+    pub host: Option<String>,
+}
+
 #[async_trait]
 pub trait Gateway<S> {
-    fn setup(&mut self, settings: Option<S>) -> GatewayMessageReceiver;
+    fn setup(&mut self, config: GatewayConfig, settings: Option<S>) -> GatewayMessageReceiver;
     async fn set_settings(&mut self, settings: S);
     async fn start(&mut self);
     fn kind(&self) -> String;
