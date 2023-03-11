@@ -50,6 +50,15 @@ pub struct GatewayConfig {
     pub host: Option<String>,
 }
 
+impl Default for GatewayConfig {
+    fn default() -> Self {
+        GatewayConfig {
+            port: 8080,
+            host: None
+        }
+    }
+}
+
 #[async_trait]
 pub trait Gateway<S> {
     fn setup(&mut self, config: GatewayConfig, settings: Option<S>) -> GatewayMessageReceiver;
