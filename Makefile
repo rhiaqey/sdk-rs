@@ -8,3 +8,7 @@ build:
 .PHONY: prod
 prod:
 	cargo +nightly build --release
+
+.PHONY: test
+test:
+	cargo +nightly test
