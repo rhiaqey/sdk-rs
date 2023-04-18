@@ -18,14 +18,14 @@ impl MessageValue {
         }
     }
 
-    pub fn to_vec(&self) -> Option<Vec<u8>> {
+    pub fn to_vec(&self) -> serde_json::Result<Vec<u8>> {
         match self {
-            MessageValue::Text(text) => Some(text.as_bytes().to_vec()),
+            MessageValue::Text(text) => Ok(text.as_bytes().to_vec()),
             MessageValue::Json(value) => match serde_json::to_string(value) {
-                Ok(data) => Some(data.as_bytes().to_vec()),
-                Err(_) => None,
+                Ok(data) => Ok(data.as_bytes().to_vec()),
+                Err(err) => Err(err),
             }
-            MessageValue::Binary(data) => Some(data.to_vec()),
+            MessageValue::Binary(data) => Ok(data.to_vec()),
         }
     }
 }
@@ -53,10 +53,11 @@ mod tests {
 
     #[test]
     fn can_convert_to_vec() {
-        let result = Some(vec![123, 34, 110, 97, 109, 101, 34, 58, 34, 116, 101, 115, 116, 34, 125]);
+        let result = vec![123, 34, 110, 97, 109, 101, 34, 58, 34, 116, 101, 115, 116, 34, 125];
         let data = TestStruct{ name: "test".to_string() };
         let msg = MessageValue::Json(json!(data));
-        assert_eq!(msg.to_vec(), result);
+        assert_eq!(msg.to_vec().is_ok(), true);
+        assert_eq!(msg.to_vec().unwrap(), result);
     }
 
 }
