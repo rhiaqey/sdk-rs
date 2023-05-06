@@ -1,10 +1,10 @@
-// use serde::de::{Error, Unexpected, Visitor};
+use std::borrow::Cow;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct Channel {
-    pub name: String,
+    pub name: Cow<'static, str>,
     pub size: usize,
 }
 
