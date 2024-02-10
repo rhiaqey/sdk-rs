@@ -64,5 +64,6 @@ pub trait Gateway<S> {
     fn setup(&mut self, config: GatewayConfig, settings: Option<S>) -> GatewayMessageReceiver;
     async fn set_settings(&mut self, settings: S);
     async fn start(&mut self);
-    fn kind(&self) -> String;
+    fn schema() -> serde_json::Value;
+    fn kind() -> String;
 }
