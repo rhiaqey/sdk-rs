@@ -1,9 +1,9 @@
-use crate::message::MessageValue;
 use async_trait::async_trait;
 use serde::{Deserialize, Serialize};
 use tokio::sync::mpsc::UnboundedReceiver;
+use crate::{message::MessageValue, settings::Settings};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct GatewayMessage {
     #[serde(rename = "key")]
     pub key: String,
@@ -44,7 +44,7 @@ pub struct GatewayMessage {
 pub type GatewayMessageReceiver =
     Result<UnboundedReceiver<GatewayMessage>, Box<dyn std::error::Error>>;
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct GatewayConfig {
     pub port: u16,
     pub host: Option<String>,
@@ -60,7 +60,7 @@ impl Default for GatewayConfig {
 }
 
 #[async_trait]
-pub trait Gateway<S> {
+pub trait Gateway<S: Settings> {
     fn setup(&mut self, config: GatewayConfig, settings: Option<S>) -> GatewayMessageReceiver;
     async fn set_settings(&mut self, settings: S);
     async fn start(&mut self);
