@@ -44,7 +44,7 @@ pub struct GatewayMessage {
 pub type GatewayMessageReceiver =
     Result<UnboundedReceiver<GatewayMessage>, Box<dyn std::error::Error>>;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct GatewayConfig {
     pub port: u16,
     pub host: Option<String>,
