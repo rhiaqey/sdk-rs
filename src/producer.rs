@@ -1,9 +1,9 @@
-use crate::message::MessageValue;
 use async_trait::async_trait;
 use serde::{Deserialize, Serialize};
 use tokio::sync::mpsc::UnboundedReceiver;
+use crate::{message::MessageValue, settings::Settings};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct ProducerMessage {
     #[serde(rename = "key")]
     pub key: String,
@@ -33,7 +33,7 @@ pub type ProducerMessageReceiver =
     Result<UnboundedReceiver<ProducerMessage>, Box<dyn std::error::Error>>;
 
 #[async_trait]
-pub trait Producer<S> {
+pub trait Producer<S: Settings> {
     fn setup(&mut self, settings: Option<S>) -> ProducerMessageReceiver;
     async fn set_settings(&mut self, settings: S);
     async fn start(&mut self);
