@@ -1,7 +1,7 @@
+use crate::{message::MessageValue, settings::Settings};
 use async_trait::async_trait;
 use serde::{Deserialize, Serialize};
 use tokio::sync::mpsc::UnboundedReceiver;
-use crate::{message::MessageValue, settings::Settings};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct GatewayMessage {
@@ -11,12 +11,13 @@ pub struct GatewayMessage {
     #[serde(rename = "val")]
     pub value: MessageValue,
 
-    // If timestamp is provided there will a check in timestamps. If latest entry in database is
-    // older than the message then we do not store the new message
+    // If timestamp is provided there will a check in timestamps.
+    // If the latest entry in the database is older than the message,
+    // then we do not store the new message
     #[serde(rename = "tms", skip_serializing_if = "Option::is_none")]
     pub timestamp: Option<u64>,
 
-    // If tag is provided, there will be an extra comparison message comparison
+    // If the tag is provided, there will be an extra comparison message comparison
     #[serde(rename = "tag", skip_serializing_if = "Option::is_none")]
     pub tag: Option<String>,
 
@@ -54,7 +55,7 @@ impl Default for GatewayConfig {
     fn default() -> Self {
         GatewayConfig {
             port: 8080,
-            host: None
+            host: None,
         }
     }
 }
