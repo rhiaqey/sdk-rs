@@ -47,7 +47,7 @@ pub type GatewayMessageReceiver =
 
 #[derive(Clone, Debug)]
 pub struct GatewayConfig {
-    pub port: u16,
+    pub port: u32,
     pub host: Option<String>,
 }
 
