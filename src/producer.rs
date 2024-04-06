@@ -39,5 +39,6 @@ pub trait Producer<S: Settings> {
     async fn set_settings(&mut self, settings: S);
     async fn start(&mut self);
     fn schema() -> serde_json::Value;
+    async fn metrics() -> serde_json::Value;
     fn kind() -> String;
 }
