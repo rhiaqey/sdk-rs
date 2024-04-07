@@ -1,5 +1,4 @@
 use crate::{message::MessageValue, settings::Settings};
-use async_trait::async_trait;
 use serde::{Deserialize, Serialize};
 use tokio::sync::mpsc::UnboundedReceiver;
 
@@ -33,12 +32,11 @@ pub struct ProducerMessage {
 pub type ProducerMessageReceiver =
     Result<UnboundedReceiver<ProducerMessage>, Box<dyn std::error::Error>>;
 
-#[async_trait]
 pub trait Producer<S: Settings> {
     fn setup(&mut self, settings: Option<S>) -> ProducerMessageReceiver;
-    async fn set_settings(&mut self, settings: S);
-    async fn start(&mut self);
-    fn schema() -> serde_json::Value;
-    async fn metrics(&self) -> serde_json::Value;
+    fn set_settings(&mut self, settings: S) -> impl std::future::Future<Output = ()> + Send;
+    fn start(&mut self) -> impl std::future::Future<Output = ()> + Send;
+    fn schema() -> impl std::future::Future<Output = serde_json::Value> + Send;
+    fn metrics(&self) -> impl std::future::Future<Output = serde_json::Value> + Send;
     fn kind() -> String;
 }
