@@ -1,5 +1,4 @@
 use crate::{message::MessageValue, settings::Settings};
-use async_trait::async_trait;
 use serde::{Deserialize, Serialize};
 use tokio::sync::mpsc::UnboundedReceiver;
 
@@ -60,12 +59,11 @@ impl Default for GatewayConfig {
     }
 }
 
-#[async_trait]
 pub trait Gateway<S: Settings> {
     fn setup(&mut self, config: GatewayConfig, settings: Option<S>) -> GatewayMessageReceiver;
-    async fn set_settings(&mut self, settings: S);
-    async fn start(&mut self);
+    fn set_settings(&mut self, settings: S) -> impl std::future::Future<Output = ()> + Send;
+    fn start(&mut self) -> impl std::future::Future<Output = ()> + Send;
     fn schema() -> serde_json::Value;
-    async fn metrics(&self) -> serde_json::Value;
+    fn metrics(&self) -> impl std::future::Future<Output = serde_json::Value> + Send;
     fn kind() -> String;
 }
