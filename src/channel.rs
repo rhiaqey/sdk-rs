@@ -7,6 +7,12 @@ pub struct Channel {
     pub size: usize,
 }
 
+impl Channel {
+    pub fn get_name(&self) -> &String {
+        &self.name
+    }
+}
+
 impl PartialEq<Channel> for Channel {
     fn eq(&self, other: &Channel) -> bool {
         self.name == other.name && self.size == other.size
