@@ -28,6 +28,10 @@ pub struct GatewayMessage {
     #[serde(rename = "siz", skip_serializing_if = "Option::is_none")]
     pub size: Option<usize>,
 
+    // target specific user ids
+    #[serde(rename = "uid", skip_serializing_if = "Option::is_none")]
+    pub user_ids: Option<Vec<String>>,
+
     // target specific client ids
     #[serde(rename = "cid", skip_serializing_if = "Option::is_none")]
     pub client_ids: Option<Vec<String>>,
@@ -35,10 +39,6 @@ pub struct GatewayMessage {
     // target specific group ids
     #[serde(rename = "gid", skip_serializing_if = "Option::is_none")]
     pub group_ids: Option<Vec<String>>,
-
-    // target specific user ids
-    #[serde(rename = "uid", skip_serializing_if = "Option::is_none")]
-    pub user_ids: Option<Vec<String>>,
 }
 
 pub type GatewayMessageReceiver =
