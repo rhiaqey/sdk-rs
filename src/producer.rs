@@ -35,10 +35,6 @@ pub struct ProducerMessage {
     // target specific client ids
     #[serde(rename = "cid", skip_serializing_if = "Option::is_none")]
     pub client_ids: Option<Vec<String>>,
-
-    // target specific group ids
-    #[serde(rename = "gid", skip_serializing_if = "Option::is_none")]
-    pub group_ids: Option<Vec<String>>,
 }
 
 pub type ProducerMessageReceiver =
