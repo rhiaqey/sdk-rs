@@ -50,6 +50,17 @@ impl SimpleChannels {
     }
 }
 
+impl From<Vec<String>> for SimpleChannels {
+    fn from(value: Vec<String>) -> Self {
+        Self {
+            0: value
+                .iter()
+                .map(|x| SimpleChannel { 0: x.clone() })
+                .collect(),
+        }
+    }
+}
+
 impl From<Vec<&str>> for SimpleChannels {
     fn from(value: Vec<&str>) -> Self {
         Self {
