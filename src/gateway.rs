@@ -55,7 +55,7 @@ impl Default for GatewayConfig {
     }
 }
 
-pub trait Gateway<S: Settings> {
+pub trait Gateway<S: Settings>: Default {
     fn setup(&mut self, config: GatewayConfig, settings: Option<S>) -> GatewayMessageReceiver;
     fn set_settings(&mut self, settings: S) -> impl std::future::Future<Output = ()> + Send;
     fn start(&mut self) -> impl std::future::Future<Output = ()> + Send;
