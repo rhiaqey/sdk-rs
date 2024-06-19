@@ -43,9 +43,9 @@ pub type ProducerMessageReceiver =
 pub trait Producer<S: Settings>: Sized {
     fn create() -> Result<Self, Box<dyn std::error::Error>>;
     fn setup(&mut self, settings: Option<S>) -> ProducerMessageReceiver;
-    fn set_settings(&mut self, settings: S) -> impl std::future::Future<Output = ()>;
-    fn start(&mut self) -> impl std::future::Future<Output = ()>;
+    fn set_settings(&mut self, settings: S) -> impl std::future::Future<Output = ()> + Send;
+    fn start(&mut self) -> impl std::future::Future<Output = ()> + Send;
     fn schema() -> serde_json::Value;
-    fn metrics(&self) -> impl std::future::Future<Output = serde_json::Value>;
+    fn metrics(&self) -> impl std::future::Future<Output = serde_json::Value> + Send;
     fn kind() -> String;
 }
