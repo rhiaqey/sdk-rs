@@ -40,7 +40,8 @@ pub struct ProducerMessage {
 pub type ProducerMessageReceiver =
     Result<UnboundedReceiver<ProducerMessage>, Box<dyn std::error::Error>>;
 
-pub trait Producer<S: Settings>: Default {
+pub trait Producer<S: Settings>: Sized {
+    fn create() -> Result<Self, Box<dyn std::error::Error>>;
     fn setup(&mut self, settings: Option<S>) -> ProducerMessageReceiver;
     fn set_settings(&mut self, settings: S) -> impl std::future::Future<Output = ()> + Send;
     fn start(&mut self) -> impl std::future::Future<Output = ()> + Send;
