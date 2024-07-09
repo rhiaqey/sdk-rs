@@ -42,6 +42,9 @@ pub type GatewayMessageReceiver =
 
 #[derive(Clone, Debug)]
 pub struct GatewayConfig {
+    pub id: Option<String>,
+    pub name: Option<String>,
+    pub namespace: Option<String>,
     pub port: u16,
     pub host: Option<String>,
 }
@@ -49,6 +52,9 @@ pub struct GatewayConfig {
 impl Default for GatewayConfig {
     fn default() -> Self {
         GatewayConfig {
+            id: None,
+            name: None,
+            namespace: None,
             port: 8080,
             host: None,
         }
@@ -56,8 +62,11 @@ impl Default for GatewayConfig {
 }
 
 pub trait Gateway<S: Settings>: Sized {
-    fn create() -> Result<Self, Box<dyn std::error::Error>>;
-    fn setup(&mut self, config: GatewayConfig, settings: Option<S>) -> GatewayMessageReceiver;
+    fn setup(
+        &mut self,
+        config: GatewayConfig,
+        settings: Option<S>,
+    ) -> impl std::future::Future<Output = GatewayMessageReceiver> + Send;
     fn set_settings(&mut self, settings: S) -> impl std::future::Future<Output = ()> + Send;
     fn start(&mut self) -> impl std::future::Future<Output = ()> + Send;
     fn schema() -> serde_json::Value;
