@@ -49,15 +49,6 @@ pub struct GatewayConfig {
     pub host: Option<String>,
 }
 
-impl GatewayConfig {
-    pub fn get_id(&self) -> &str {
-        match &self.id {
-            None => "",
-            Some(val) => val.as_str(),
-        }
-    }
-}
-
 impl Default for GatewayConfig {
     fn default() -> Self {
         GatewayConfig {
