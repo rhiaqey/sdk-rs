@@ -51,7 +51,7 @@ pub struct GatewayConfig {
 
 impl Default for GatewayConfig {
     fn default() -> Self {
-        GatewayConfig {
+        Self {
             id: None,
             name: None,
             namespace: None,

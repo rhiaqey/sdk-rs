@@ -1,3 +1,4 @@
+use crate::gateway::{GatewayConfig, GatewayMessageReceiver};
 use crate::{message::MessageValue, settings::Settings};
 use serde::{Deserialize, Serialize};
 use tokio::sync::mpsc::UnboundedReceiver;
@@ -40,9 +41,33 @@ pub struct ProducerMessage {
 pub type ProducerMessageReceiver =
     Result<UnboundedReceiver<ProducerMessage>, Box<dyn std::error::Error>>;
 
-pub trait Producer<S: Settings>: Sized {
-    fn create() -> Result<Self, Box<dyn std::error::Error>>;
-    fn setup(&mut self, settings: Option<S>) -> ProducerMessageReceiver;
+#[derive(Clone, Debug)]
+pub struct ProducerConfig {
+    pub id: Option<String>,
+    pub name: Option<String>,
+    pub namespace: Option<String>,
+    pub port: u16,
+    pub host: Option<String>,
+}
+
+impl Default for ProducerConfig {
+    fn default() -> Self {
+        Self {
+            id: None,
+            name: None,
+            namespace: None,
+            port: 8080,
+            host: None,
+        }
+    }
+}
+
+pub trait Producer<S: Settings>: Default {
+    fn setup(
+        &mut self,
+        config: ProducerConfig,
+        settings: Option<S>,
+    ) -> impl std::future::Future<Output = ProducerMessageReceiver> + Send;
     fn set_settings(&mut self, settings: S) -> impl std::future::Future<Output = ()> + Send;
     fn start(&mut self) -> impl std::future::Future<Output = ()> + Send;
     fn schema() -> serde_json::Value;
