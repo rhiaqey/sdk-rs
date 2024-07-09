@@ -61,7 +61,7 @@ impl Default for GatewayConfig {
     }
 }
 
-pub trait Gateway<S: Settings>: Sized {
+pub trait Gateway<S: Settings>: Default {
     fn setup(
         &mut self,
         config: GatewayConfig,
