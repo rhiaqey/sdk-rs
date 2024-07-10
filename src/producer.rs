@@ -46,6 +46,7 @@ pub struct ProducerConfig {
     pub id: Option<String>,
     pub name: Option<String>,
     pub namespace: Option<String>,
+    pub organization: Option<String>,
     pub port: u16,
     pub host: Option<String>,
 }
@@ -56,6 +57,7 @@ impl Default for ProducerConfig {
             id: None,
             name: None,
             namespace: None,
+            organization: None,
             port: 8080,
             host: None,
         }
