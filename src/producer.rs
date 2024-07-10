@@ -71,6 +71,5 @@ pub trait Producer<S: Settings>: Default {
     fn set_settings(&mut self, settings: S) -> impl std::future::Future<Output = ()> + Send;
     fn start(&mut self) -> impl std::future::Future<Output = ()> + Send;
     fn schema() -> serde_json::Value;
-    fn metrics(&self) -> impl std::future::Future<Output = serde_json::Value> + Send;
     fn kind() -> String;
 }
