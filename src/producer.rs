@@ -1,4 +1,3 @@
-use crate::gateway::{GatewayConfig, GatewayMessageReceiver};
 use crate::{message::MessageValue, settings::Settings};
 use serde::{Deserialize, Serialize};
 use tokio::sync::mpsc::UnboundedReceiver;
