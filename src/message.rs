@@ -49,7 +49,7 @@ mod tests {
         let msg = MessageValue::Json(json!(data));
         // println!("{:?}", msg.to_vec());
         let decoded = msg.decode::<TestStruct>();
-        assert_eq!(decoded.is_ok(), true);
+        assert!(decoded.is_ok());
         assert_eq!(decoded.unwrap().name, "test".to_string());
     }
 
@@ -62,7 +62,7 @@ mod tests {
             name: "test".to_string(),
         };
         let msg = MessageValue::Json(json!(data));
-        assert_eq!(msg.to_vec().is_ok(), true);
+        assert!(msg.to_vec().is_ok());
         assert_eq!(msg.to_vec().unwrap(), result);
     }
 }
