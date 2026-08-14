@@ -68,9 +68,9 @@ pub trait Gateway<S: Settings>: Default {
         &mut self,
         config: GatewayConfig,
         settings: Option<S>,
-    ) -> impl std::future::Future<Output = GatewayMessageReceiver> + Send;
-    fn set_settings(&mut self, settings: S) -> impl std::future::Future<Output = ()> + Send;
-    fn start(&mut self) -> impl std::future::Future<Output = ()> + Send;
+    ) -> impl Future<Output = GatewayMessageReceiver> + Send;
+    fn set_settings(&mut self, settings: S) -> impl Future<Output = ()> + Send;
+    fn start(&mut self) -> impl Future<Output = ()> + Send;
     fn schema() -> serde_json::Value;
     fn kind() -> String;
 }
